@@ -46,7 +46,7 @@ Send links and ebooks from your phone to your Kobo, through the Pi. Share anythi
 
 - **Private URL:** `https://your-pi.your-tailnet.ts.net:8850` (tailnet only, via Tailscale Serve)
 - **Service:** `kobo-bridge.service`, code in `/opt/kobo-bridge`, data in `/var/lib/kobo-bridge`
-- **Editable source:** `/home/user/kobo-bridge`
+- **Editable source:** your checkout of this repository
 
 ## What it does with what you send
 
@@ -70,7 +70,7 @@ Jobs run one at a time at low priority (`Nice=10`, `CPUQuota=150%`). Files are m
 - Listens on `127.0.0.1:8850` only; reachable through the private Tailscale Serve route.
 - Exact Host check; API writes need the `X-Kobo-Bridge: 1` header and a matching Origin. The share endpoint (which Android posts to without a custom header) refuses other sites' Origins and `Sec-Fetch-Site: cross-site`.
 - Shared links may only point to public addresses: localhost, LAN and tailnet (100.64.0.0/10) are refused at every redirect. Downloads are capped at 50 MB, uploads at 200 MB.
-- The service runs as `user` with a read-only system and home, writable only at `/var/lib/kobo-bridge` and `~/kobo/library`.
+- The service runs as an unprivileged user account with a read-only system and home, writable only at `/var/lib/kobo-bridge` and `~/kobo/library`.
 - Wikipedia refuses clients without contact info: set `KOBO_BRIDGE_CONTACT` (a URL or email) in the unit to enable it.
 
 ## Development
