@@ -1,0 +1,43 @@
+[Unit]
+Description=Kobo Bridge: send links and ebooks to the Kobo
+After=network-online.target tailscaled.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=user
+Group=1000
+WorkingDirectory=/opt/kobo-bridge
+Environment=KOBO_BRIDGE_DATA=/var/lib/kobo-bridge
+Environment=KOBO_BRIDGE_LIBRARY=/home/user/kobo/library
+Environment=KOBO_BRIDGE_ORIGIN=https://your-pi.your-tailnet.ts.net:8850
+Environment=PYTHONDONTWRITEBYTECODE=1
+# Contact info sent with downloads; Wikipedia refuses clients without it. A URL or an email address.
+Environment=KOBO_BRIDGE_CONTACT=+https://github.com/Djeddozo
+# The Kobo talks plain HTTP over the tailnet (already WireGuard-encrypted) on Tailscale Serve port 8851.
+Environment=KOBO_BRIDGE_EXTRA_HOSTS=100.x.y.z:8851,your-pi.your-tailnet.ts.net:8851,your-pi:8851
+Environment=HOME=/home/user
+ExecStart=/opt/kobo-bridge/.venv/bin/python -m bridge
+Restart=on-failure
+RestartSec=4
+UMask=0027
+TimeoutStopSec=15
+# Conversions are best-effort: keep them from crowding out the Pi's other services.
+Nice=10
+MemoryMax=1200M
+CPUQuota=150%
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/kobo-bridge /home/user/kobo/library
+# Ask Claude: the owner's Claude Code login and session history.
+ReadWritePaths=-/home/user/.claude -/home/user/.claude.json
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

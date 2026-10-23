@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f2a24">
+  <title>Kobo Bridge</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/static/icon-192.png">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header>
+    <img src="/static/icon.svg" alt="" width="40" height="40">
+    <div>
+      <h1>Kobo Bridge</h1>
+      <p class="sub">Send links and ebooks to your Kobo</p>
+    </div>
+    <button id="install" class="ghost" hidden>Install app</button>
+  </header>
+
+  <main>
+    <div id="banner" class="banner" role="status" hidden></div>
+
+    <section class="card">
+      <h2>Send a link</h2>
+      <form id="link-form">
+        <input id="link" type="url" inputmode="url" placeholder="https://…" autocomplete="off" required>
+        <button type="submit">Send</button>
+      </form>
+      <p class="hint">Articles become a clean ebook. Links to EPUB or PDF files are downloaded as they are.</p>
+    </section>
+
+    <section class="card">
+      <h2>Upload ebooks</h2>
+      <form id="file-form">
+        <label class="file">
+          <input id="files" type="file" multiple accept=".epub,.pdf,.cbz,.cbt,.mobi,.fb2,.djvu,.txt,.rtf,.doc,.docx,.odt,.html,.htm,.chm,.xps,.md">
+          <span id="file-label">Choose files</span>
+        </label>
+        <button type="submit">Upload</button>
+      </form>
+      <p class="hint">Tip: in any app, tap <b>Share → Kobo Bridge</b>.</p>
+    </section>
+
+    <section>
+      <h2 class="list-title">Recent</h2>
+      <ul id="jobs" class="jobs"></ul>
+      <p id="empty" class="hint" hidden>Nothing sent yet.</p>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+</body>
+</html>

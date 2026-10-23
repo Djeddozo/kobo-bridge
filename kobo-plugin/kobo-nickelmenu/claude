@@ -1,0 +1,1 @@
+menu_item:main:Claude:cmd_spawn:quiet:exec sh /mnt/onboard/.adds/askclaude/launch.sh claude
