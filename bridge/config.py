@@ -6,7 +6,7 @@ PORT = int(os.environ.get("KOBO_BRIDGE_PORT", "8850"))
 ORIGIN = os.environ.get("KOBO_BRIDGE_ORIGIN", f"http://127.0.0.1:{PORT}").rstrip("/")
 
 DATA_DIR = Path(os.environ.get("KOBO_BRIDGE_DATA", "/var/lib/kobo-bridge"))
-LIBRARY_DIR = Path(os.environ.get("KOBO_BRIDGE_LIBRARY", "/home/djeddozo/kobo/library"))
+LIBRARY_DIR = Path(os.environ.get("KOBO_BRIDGE_LIBRARY", str(Path.home() / "kobo" / "library")))
 # Everything the bridge makes goes into one subfolder, so it never touches other library files.
 OUTPUT_DIR = LIBRARY_DIR / "Kobo Bridge"
 
